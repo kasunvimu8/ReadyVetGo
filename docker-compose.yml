@@ -1,0 +1,26 @@
+services:
+  frontend:
+    build: ./frontend/
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      backend:
+        condition: service_started
+  backend:
+    build: ./backend/
+    restart: unless-stopped
+    ports:
+      - "${BACKEND_PORT:-8080}:8080"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - public_volume:/app/public
+      - private_volume:/app/private
+volumes:
+  public_volume:
+    driver: local
+  private_volume:
+    driver: local

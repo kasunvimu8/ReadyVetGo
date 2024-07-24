@@ -1,0 +1,40 @@
+stages:
+  - deploy
+
+.deploy_template: &deploy_template
+  tags:
+    - rocky-linux-vps
+  before_script:
+    - cp ${FRONTEND_PROD_ENV} ./frontend/.env
+    - cp ${BACKEND_PROD_ENV} ./backend/.env
+  script:
+    - docker compose -p ready-vet-go-${STAGE} down
+    - docker builder prune --all
+    - docker image prune
+    - docker compose -p ready-vet-go-${STAGE} build
+    - docker compose -p ready-vet-go-${STAGE} up -d --force-recreate
+    - docker image prune -a -f --filter "until=24h"
+    - docker volume prune -f
+
+deploy_prod:
+  variables:
+    FRONTEND_PORT: 46210
+    BACKEND_PORT: 46211
+    STAGE: prod
+  stage: deploy
+  <<: *deploy_template
+  only:
+    - main
+
+deploy_dev:
+  stage: deploy
+  variables:
+    FRONTEND_PORT: 46212
+    BACKEND_PORT: 46213
+    STAGE: dev
+  <<: *deploy_template
+  before_script:
+    - cp ${FRONTEND_DEV_ENV} ./frontend/.env
+    - cp ${BACKEND_DEV_ENV} ./backend/.env
+  only:
+    - development
