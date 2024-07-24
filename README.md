@@ -58,16 +58,6 @@ npm run dev
 <img src="images/Login.png" alt="ReadyVetGo Logo" style="max-height: 325px">
 
 You can register as a veterinarian or farmer by clicking **login** in the top right corner.
-#### Admin login
-> To test admin functionality, log-in as an Admin using:
-> ```
-> email:
-> admin@readyvetgo.de
-> 
-> password:
-> SEBA24_admin
-> ```
-
 ### Subscription
 
 <img src="images/Subscription.png" alt="ReadyVetGo Logo" style="max-height: 325px">
@@ -109,7 +99,7 @@ Vets can view their blog posts and create new ones at http://localhost:3000/cms-
 ### Admin Functionality
 - Verify veterinarians http://localhost:3000/verify-vet
 - Approve blog posts http://localhost:3000/approve-blogpost
-- View Subscriptions http://localhost:3000/verify-vet
+- View Subscriptions http://localhost:3000/allSubscriptions
 
 ## Tech-Stack - Libraries Used
 
